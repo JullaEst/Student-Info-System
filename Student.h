@@ -15,7 +15,7 @@ protected:
 	string firstName;
 	string lastName;
 	string emailAddress;
-	int age;
+	string age;
 	int courseDays[courseArraySize]; 
 	DegreeType degree;
 
@@ -30,7 +30,7 @@ public:
 	string getfirstName();
 	string getlastName();
 	string getemailAddress();
-	int getAge();
+	string getAge();
 	int* getcourseDays();
 	virtual DegreeType getDegreeType() = 0;
 
@@ -39,7 +39,7 @@ public:
 	void setfirstName(string firstName);
 	void setlastName(string lastName);
 	void setemailAddress(string emailAddress);
-	void setAge(int age);
+	void setAge(string age);
 	void setcourseDays(int courseDays[]);
 	void setDegreeType(DegreeType degree);
 
