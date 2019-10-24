@@ -14,13 +14,13 @@ Student::Student() //empty constructor
 	this->firstName = "";
 	this->lastName = "";
 	this->emailAddress = "";
-	this->age = 0;
+	this->age = "";
 	for (int i = 0; i < courseArraySize; i++) this->courseDays[i] = 0;
 
 }
 
 //full constructor
-Student::Student(string studentId, string firstName, string lastName, string emailAddress, int age, int courseDays[], DegreeType degree)
+Student::Student(string studentId, string firstName, string lastName, string emailAddress, string age, int courseDays[], DegreeType degree)
 {
 	this->studentId = studentId;
 	this->firstName = firstName;
@@ -43,7 +43,7 @@ string Student::getlastName() {
 string Student::getemailAddress() {
 	return emailAddress;
 }
-int Student::getAge() {
+string Student::getAge() {
 	return age;
 }
 int* Student::getcourseDays() {
@@ -64,7 +64,7 @@ void Student::setlastName(string lastName) {
 void Student::setemailAddress(string emailAddress) {
 	this->emailAddress = emailAddress;
 }
-void Student::setAge(int age) {
+void Student::setAge(string age) {
 	this->age = age;
 }
 void Student::setcourseDays(int courseDays[])
