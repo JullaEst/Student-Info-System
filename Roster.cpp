@@ -5,12 +5,14 @@
 #include "networkStudent.h"
 #include "securityStudent.h"
 #include "softwareStudent.h"
+#include <iomanip>
 using namespace std;
 using std::cout;
 using std::endl;
+using std::cerr;
 
 
-Roster::Roster() 
+Roster::Roster()
 {
 	this->capacity = 0;
 	this->lastIndex = -1;
@@ -21,7 +23,7 @@ Roster::Roster(int capacity)
 {
 	this->capacity = capacity;
 	this->lastIndex = -1;
-	this->classRosterArray = new Student*[capacity];
+	this->classRosterArray = new Student * [capacity];
 
 }
 
@@ -103,41 +105,41 @@ void Roster::parseThenAdd(string row)
 
 void Roster::add(string studentId, string firstName, string lastName, string emailAddress, string age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeType degree)
 {
-		int daysInCourse[Student::courseArraySize];
-		daysInCourse[0] = daysInCourse1;
-		daysInCourse[1] = daysInCourse2;
-		daysInCourse[2] = daysInCourse3;
-		switch (degree) {
-		case NETWORK:
+	int daysInCourse[Student::courseArraySize];
+	daysInCourse[0] = daysInCourse1;
+	daysInCourse[1] = daysInCourse2;
+	daysInCourse[2] = daysInCourse3;
+	switch (degree) {
+	case NETWORK:
 		classRosterArray[lastIndex] = new NetworkStudent(studentId, firstName, lastName, emailAddress, age, daysInCourse, degree);
 		break;
-		case SECURITY:
+	case SECURITY:
 		classRosterArray[lastIndex] = new SecurityStudent(studentId, firstName, lastName, emailAddress, age, daysInCourse, degree);
 		break;
-		case SOFTWARE:
+	case SOFTWARE:
 		classRosterArray[lastIndex] = new SoftwareStudent(studentId, firstName, lastName, emailAddress, age, daysInCourse, degree);
 		break;
-		
-		default:
-			cout << "Invalid degree type" << endl;
-			break;
-		}
+
+	default:
+		cout << "Invalid degree type" << endl;
+		break;
+	}
 }
 
 void Roster::remove(string studentId) {
 	bool found = false;
-	cout << "Remove" << studentId << "." << endl;
+	
 	for (int i = 0; i <= lastIndex && !found; i++) {
 		if (this->classRosterArray[i]->getstudentId() == studentId) {
 			found = true;
 			delete this->classRosterArray[i];
-			this->classRosterArray[i] = this-> classRosterArray[lastIndex];
+			this->classRosterArray[i] = this->classRosterArray[lastIndex];
 			lastIndex--;
-		}
-		else if (i >= this->lastIndex && !found) {
-			cout << "Could not find" << studentId << "." << endl;
+			cout << studentId << " Removed" << endl;
 		}
 	}
+	if (!found)
+		cout << studentId << " Not Found" << endl;
 }
 
 void Roster::printAll() {
@@ -151,7 +153,7 @@ void Roster::printAverageCourseDays(string studentId) {
 		if (this->classRosterArray[i]->getstudentId() == studentId) {
 			found = true;
 			int* courseDays = this->classRosterArray[i]->getcourseDays();
-			cout << "Average days in course for Student Id: " << studentId << "is " << (courseDays[0] + courseDays[1] + courseDays[2]) / 3 << endl;
+			cout << "Average days in course for Student Id: " << studentId << " is " << (courseDays[0] + courseDays[1] + courseDays[2]) / 3.0 << endl;
 		}
 		else if (i >= this->lastIndex && !found) {
 			cout << "Can not find " << studentId << "." << endl;
@@ -181,37 +183,50 @@ int main() {
 	cout << "Programming language: C++" << endl;
 	cout << "Student ID: 001040445" << endl;
 	cout << "Name: Julla Estella" << endl;
-	
+
 
 	int numStudentData = 5;
-    string studentData[5] = {
-		"A1,John,Smith,John1989@gmail.com,20,30,35,40,SECURITY",
-		"A2,Suzan,Erickson,Erickson_1990@gmail.com,19,50,30,40,NETWORK",
+	string studentData[5] = {
+		"A1,John,Smith,John1989@gm ail.com,20,30,35,40,SECURITY",
+		"A2,Suzan,Erickson,Erickson_1990@gmailcom,19,50,30,40,NETWORK",
 		"A3,Jack,Napoli,The_lawyer99yahoo.com,19,20,40,33,SOFTWARE",
 		"A4,Erin,Black,Erin.black@comcast.net,22,50,58,40,SECURITY",
 		"A5,Julla,Estella,jestell@wgu.edu,33,30,20,24,SOFTWARE"
 	};
 
 	Roster* classRoster = new Roster(numStudentData);
-	for (int i = 0; i < numStudentData; ++i) {
+	for (int i = 0; i < numStudentData; i++)
+	{
 		classRoster->parseThenAdd(studentData[i]);
 	}
 
 	classRoster->printAll();
 
-	for (int i = 0; i < numStudentData; i++) {
-		classRoster->printAverageCourseDays(classRoster->getStudentAt(i) -> getstudentId());
-	}
-	classRoster->printByDegreeType(SOFTWARE);
-	cout << endl;
-	classRoster->remove("A3");
-	cout << endl;
-	classRoster->remove("A3");
-	cout << endl;
+	classRoster->printInvalidEmails();
 
+	for (int i = 0; i < numStudentData; i++) {
+		classRoster->printAverageCourseDays(classRoster->getStudentAt(i)->getstudentId());
+	}
+
+	cout << "Remove A3 \n";
+	classRoster->remove("A3");
+
+	cout << "Remove A3 \n";
+	classRoster->remove("A3");
+
+
+	
 	system("pause");
 	return 0;
+
 };
 
 
-Roster::~Roster() {}
+Roster::~Roster()
+{
+	for (int i = 0; i <= lastIndex; i++)
+	{
+		delete this->classRosterArray[i];
+	}
+	delete classRosterArray;
+}
