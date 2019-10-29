@@ -31,40 +31,51 @@ Student::Student(string studentId, string firstName, string lastName, string ema
 }
 
 //getters
-string Student::getstudentId() {
+string Student::getstudentId() 
+{
 	return studentId;
 }
-string Student::getfirstName() {
+string Student::getfirstName() 
+{
 	return firstName;
 }
-string Student::getlastName() {
+string Student::getlastName()
+{
 	return lastName;
 }
-string Student::getemailAddress() {
+string Student::getemailAddress() 
+{
 	return emailAddress;
 }
-string Student::getAge() {
+string Student::getAge() 
+{
 	return age;
 }
-int* Student::getcourseDays() {
+int* Student::getcourseDays() 
+{
 	return courseDays;
 }
 
 
 //setters
-void Student::setstudentId(string studentId) {
+void Student::setstudentId(string studentId) 
+{
 	this->studentId = studentId;
 }
-void Student::setfirstName(string firstName) {
+void Student::setfirstName(string firstName) 
+{
 	this->firstName = firstName;
 }
-void Student::setlastName(string lastName) {
+void Student::setlastName(string lastName) 
+{
 	this->lastName = lastName;
 }
-void Student::setemailAddress(string emailAddress) {
+void Student::setemailAddress(string emailAddress) 
+{
 	this->emailAddress = emailAddress;
 }
-void Student::setAge(string age) {
+void Student::setAge(string age) 
+{
 	this->age = age;
 }
 void Student::setcourseDays(int courseDays[])
@@ -75,15 +86,15 @@ void Student::setcourseDays(int courseDays[])
 }
 
 //print method
-void Student::print() {
+void Student::print()
+{
 	cout << left << setw(5) << getstudentId();
-	cout << left << setw(10) << getfirstName();
-	cout << left << setw(10) << getlastName();
-	cout << left << setw(20) << getemailAddress();
-	cout << left << setw(5) << getAge();
-	cout << left << setw(5) << getcourseDays()[0];
-	cout << left << setw(5) << getcourseDays()[1];
-	cout << left << setw(10) << getcourseDays()[2];
+	cout << left << setw(10) << "First Name: " << left << setw(15) << getfirstName();
+	cout << left << setw(10) << "Last Name: "  << left << setw(15) << getlastName();
+	cout << left << setw(15) << "Email Address: " << left << setw(30) << getemailAddress();
+	cout << left << setw(5) << "Age: " << left << setw(15) << getAge();
+	cout << left << setw(5) << "Days In Course: {" << getcourseDays()[0] << "," << getcourseDays()[1] << "," << getcourseDays()[2] << "} ";
+
 }
 
 //destructor
